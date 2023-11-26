@@ -7,16 +7,30 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.annotation.Keep
 import androidx.core.content.ContextCompat.startActivity
+import com.parsuomash.sdk.di.context.SdkKoinComponent
+import com.parsuomash.sdk.di.context.SdkKoinContext
+import com.parsuomash.sdk.domain.usecase.UseCase
+import org.koin.core.component.inject
 
 @Keep
 class SDK private constructor(
   private val token: String,
   private val context: Context
-) {
+) : SdkKoinComponent {
+  internal val usecase: UseCase by inject()
+
   constructor(builder: Builder) : this(
     token = builder.token,
     context = builder.context
   )
+
+  init {
+    SdkKoinContext.start(context)
+  }
+
+  fun test() {
+    usecase()
+  }
 
   fun startActivity() {
     val intent = Intent(context, SDKActivity::class.java).apply {

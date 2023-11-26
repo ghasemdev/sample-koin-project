@@ -5,7 +5,9 @@ import org.koin.core.annotation.Single
 
 @Factory
 internal class UseCase(val k: Koo) {
-  operator fun invoke() {}
+  operator fun invoke() {
+    println("Usecase")
+  }
 }
 
 @Single

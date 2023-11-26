@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
     val sdk = provideSDK(applicationContext) {
       token = "1234"
     }
+    sdk.test()
     setContent {
       SampleKoinProjectTheme {
         // A surface container using the 'background' color from the theme

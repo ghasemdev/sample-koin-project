@@ -4,6 +4,7 @@ plugins {
   alias(libs.plugins.kotlin.android)
 
   alias(libs.plugins.ksp)
+  id("maven-publish")
 }
 
 android {
@@ -97,4 +98,27 @@ dependencies {
 
   // Logger
   implementation(libs.timber)
+}
+
+afterEvaluate {
+  publishing {
+    publications {
+      create<MavenPublication>("release") {
+        from(components.getByName("release"))
+        groupId = "ir.parsoumash.com"
+        artifactId = "sdk"
+        version = "1.0.0"
+      }
+    }
+
+    repositories {
+      maven {
+        url = uri("http://asdfghjkl")
+        credentials {
+          username = "maven.username"
+          password = "maven.password"
+        }
+      }
+    }
+  }
 }

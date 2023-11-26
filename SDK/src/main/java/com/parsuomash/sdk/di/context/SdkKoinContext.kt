@@ -3,6 +3,7 @@ package com.parsuomash.sdk.di.context
 import android.content.Context
 import com.parsuomash.sdk.BuildConfig
 import com.parsuomash.sdk.di.SdkModule
+import com.parsuomash.sdk.di.sdkModule
 import com.parsuomash.sdk.di.sharedPrefModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -36,6 +37,6 @@ internal object SdkKoinContext {
       androidLogger(level = Level.DEBUG)
     }
     androidContext(context)
-    modules(SdkModule.module, sharedPrefModule)
+    modules(SdkModule.module, sharedPrefModule, sdkModule)
   }
 }

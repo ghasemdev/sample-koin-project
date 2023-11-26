@@ -79,7 +79,8 @@ android {
 }
 
 dependencies {
-  implementation(project(":SDK"))
+//  implementation(project(":SDK"))
+  implementation("ir.parsoumash.com:sdk:1.0.0")
 
   // kotlin
   implementation(libs.bundles.kotlinx)

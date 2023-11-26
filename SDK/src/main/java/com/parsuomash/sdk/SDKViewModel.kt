@@ -7,11 +7,12 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class SDKViewModel(
-  private val useCase: UseCase,
-  private val savedStateHandle: SavedStateHandle
+  private val savedStateHandle: SavedStateHandle,
+  sdk: SDK
 ) : ViewModel() {
   init {
     savedStateHandle["hi"] = "hello"
+    sdk.usecase()
   }
 
   fun foo() {
