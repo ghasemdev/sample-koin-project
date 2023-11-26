@@ -9,4 +9,4 @@ internal class UseCase(val k: Koo) {
 }
 
 @Single
-class Koo
+internal class Koo

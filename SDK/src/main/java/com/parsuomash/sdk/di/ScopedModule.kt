@@ -10,23 +10,23 @@ import org.koin.dsl.module
 
 @Scope(SingletonScope::class)
 @Scoped
-class Foo {
+internal class Foo {
   fun log() = println("Foo")
 }
 
 @Scope(SingletonScope::class)
 @Scoped
-class Bar(val foo: Foo)
+internal class Bar(val foo: Foo)
 
 @Scope(SDKActivity::class)
 @Scoped
-class Session(context: Context) {
+internal class Session(context: Context) {
   init {
     println("Session ${context.cacheDir.absolutePath}")
   }
 }
 
-val scopedModule = module {
+internal val scopedModule = module {
   scope<SingletonScope> {
     scopedOf(::Foo)
     scopedOf(::Bar)

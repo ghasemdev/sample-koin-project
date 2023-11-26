@@ -9,7 +9,7 @@ import org.koin.core.module.dsl.named
 import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
 
-val sharedPrefModule = module {
+internal val sharedPrefModule = module {
   single {
     provideSharedPref(androidContext())
   } withOptions {
