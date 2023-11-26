@@ -5,23 +5,19 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.core.content.edit
 import com.parsuomash.sdk.di.Bar
-import com.parsuomash.sdk.di.SdkModule
 import com.parsuomash.sdk.di.Session
+import com.parsuomash.sdk.di.context.SdkKoinContext
 import com.parsuomash.sdk.di.scope.ActivityScope
 import com.parsuomash.sdk.di.scope.singletonScope
-import com.parsuomash.sdk.di.sharedPrefModule
 import com.parsuomash.sdk.theme.SampleKoinProjectTheme
 import com.parsuomash.sdk.ui.feature.home.HomeScreen
-import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.compose.KoinIsolatedContext
 import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 import org.koin.core.logger.Level
-import org.koin.ksp.generated.module
 
 internal class SDKActivity : ActivityScope() {
   private val sharedPref: SharedPreferences by inject()
@@ -38,7 +34,7 @@ internal class SDKActivity : ActivityScope() {
     setContent {
       SampleKoinProjectTheme {
         // A surface container using the 'background' color from the theme
-        KoinAndroidContext {
+        KoinIsolatedContext(context = SdkKoinContext.koinApp) {
           HomeScreen()
         }
       }
@@ -57,17 +53,11 @@ internal class SDKActivity : ActivityScope() {
   }
 
   private fun installKoin() {
-    startKoin {
-      if (BuildConfig.DEBUG) {
-        androidLogger(level = Level.DEBUG)
-      }
-      androidContext(this@SDKActivity)
-      modules(SdkModule.module, sharedPrefModule)
-    }
+    startKoin(koinApplication = SdkKoinContext.koinApp)
   }
 
   override fun onDestroy() {
-    stopKoin()
+    SdkKoinContext.koinApp.close()
     super.onDestroy()
   }
 }
