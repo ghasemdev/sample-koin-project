@@ -8,7 +8,7 @@ import com.parsuomash.sdk.di.Bar
 import com.parsuomash.sdk.di.Session
 import com.parsuomash.sdk.di.context.SdkKoinContext
 import com.parsuomash.sdk.di.scope.ActivityScope
-import com.parsuomash.sdk.di.scope.singletonScope
+import com.parsuomash.sdk.di.scope.normalScope
 import com.parsuomash.sdk.theme.SampleKoinProjectTheme
 import com.parsuomash.sdk.ui.feature.home.HomeScreen
 import org.koin.android.ext.android.inject
@@ -39,10 +39,10 @@ internal class SDKActivity : ActivityScope() {
 
   private fun scopeTest() {
     getKoin()
-    singletonScope {
+    normalScope {
       get<Bar>().foo.log()
     }
-    singletonScope {
+    normalScope {
       get<Bar>().foo.log()
     }
     session

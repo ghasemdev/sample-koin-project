@@ -2,19 +2,19 @@ package com.parsuomash.sdk.di
 
 import android.content.Context
 import com.parsuomash.sdk.SDKActivity
-import com.parsuomash.sdk.di.scope.SingletonScope
+import com.parsuomash.sdk.di.scope.NormalScope
 import org.koin.core.annotation.Scope
 import org.koin.core.annotation.Scoped
 import org.koin.core.module.dsl.scopedOf
 import org.koin.dsl.module
 
-@Scope(SingletonScope::class)
+@Scope(NormalScope::class)
 @Scoped
 internal class Foo {
   fun log() = println("Foo")
 }
 
-@Scope(SingletonScope::class)
+@Scope(NormalScope::class)
 @Scoped
 internal class Bar(val foo: Foo)
 
@@ -27,7 +27,7 @@ internal class Session(context: Context) {
 }
 
 internal val scopedModule = module {
-  scope<SingletonScope> {
+  scope<NormalScope> {
     scopedOf(::Foo)
     scopedOf(::Bar)
   }
