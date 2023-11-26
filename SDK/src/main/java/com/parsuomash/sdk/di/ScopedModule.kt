@@ -1,5 +1,6 @@
 package com.parsuomash.sdk.di
 
+import android.content.Context
 import com.parsuomash.sdk.SDKActivity
 import com.parsuomash.sdk.di.scope.SingletonScope
 import org.koin.core.annotation.Scope
@@ -19,9 +20,9 @@ class Bar(val foo: Foo)
 
 @Scope(SDKActivity::class)
 @Scoped
-class Session {
+class Session(context: Context) {
   init {
-    println("Session")
+    println("Session ${context.cacheDir.absolutePath}")
   }
 }
 
