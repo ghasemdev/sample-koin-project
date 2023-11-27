@@ -18,10 +18,6 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val sdk = provideSDK(applicationContext) {
-      token = "1234"
-    }
-    sdk.test()
     setContent {
       SampleKoinProjectTheme {
         // A surface container using the 'background' color from the theme
@@ -34,7 +30,11 @@ class MainActivity : ComponentActivity() {
             contentAlignment = Alignment.Center
           ) {
             Button(
-              onClick = { sdk.startActivity() }
+              onClick = {
+                val sdk = provideSDK(applicationContext) { token = "1234" }
+                sdk.test()
+                sdk.startActivity(true)
+              }
             ) {
               Text(text = "Open Sdk")
             }

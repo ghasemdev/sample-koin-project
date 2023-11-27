@@ -7,7 +7,17 @@
         android:exported="true"
         android:label="@string/title_activity_main"
         android:launchMode="singleTask"
-        android:theme="@style/Theme.SampleKoinProject" />
+        android:theme="@style/Theme.SampleKoinProject" >
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+          android:host="payment-result"
+          android:scheme="sign" />
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

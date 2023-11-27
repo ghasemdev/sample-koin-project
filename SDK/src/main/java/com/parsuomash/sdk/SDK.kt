@@ -5,11 +5,19 @@ package com.parsuomash.sdk
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.annotation.Keep
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.edit
 import com.parsuomash.sdk.di.context.SdkKoinComponent
 import com.parsuomash.sdk.di.context.SdkKoinContext
 import com.parsuomash.sdk.domain.usecase.UseCase
+import kotlin.properties.Delegates
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 @Keep
@@ -18,11 +26,19 @@ class SDK private constructor(
   private val context: Context
 ) : SdkKoinComponent {
   internal val usecase: UseCase by inject()
+  internal var isLight by Delegates.notNull<Boolean>()
+
+  private val sharedPreferences: SharedPreferences by inject()
+  private val scope = CoroutineScope(Dispatchers.IO + Job())
 
   constructor(builder: Builder) : this(
     token = builder.token,
     context = builder.context
-  )
+  ) {
+    scope.launch {
+      sharedPreferences.edit { putString("token", token) }
+    }
+  }
 
   init {
     SdkKoinContext.start(context)
@@ -30,9 +46,15 @@ class SDK private constructor(
 
   fun test() {
     usecase()
+    Log.d("SDK", token)
   }
 
-  fun startActivity() {
+  fun startActivity(isLight: Boolean) {
+    this.isLight = isLight
+    scope.launch {
+      sharedPreferences.edit { putBoolean("isLight", isLight) }
+    }
+
     val intent = Intent(context, SDKActivity::class.java).apply {
       flags = FLAG_ACTIVITY_NEW_TASK
     }
