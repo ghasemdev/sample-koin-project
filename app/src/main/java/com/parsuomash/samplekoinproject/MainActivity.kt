@@ -11,12 +11,21 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.parsuomash.samplekoinproject.di.appModule
 import com.parsuomash.samplekoinproject.ui.theme.SampleKoinProjectTheme
-import com.parsuomash.sdk.provideSDK
+import com.parsuomash.sdk.SDK
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 class MainActivity : ComponentActivity() {
+  private val sdk: SDK by inject()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    installKoin()
+    sdk.test()
 
     setContent {
       SampleKoinProjectTheme {
@@ -31,8 +40,6 @@ class MainActivity : ComponentActivity() {
           ) {
             Button(
               onClick = {
-                val sdk = provideSDK(applicationContext) { token = "1234" }
-                sdk.test()
                 sdk.startActivity(true)
               }
             ) {
@@ -42,5 +49,17 @@ class MainActivity : ComponentActivity() {
         }
       }
     }
+  }
+
+  private fun installKoin() {
+    startKoin {
+      androidContext(this@MainActivity)
+      modules(appModule)
+    }
+  }
+
+  override fun onDestroy() {
+    stopKoin()
+    super.onDestroy()
   }
 }

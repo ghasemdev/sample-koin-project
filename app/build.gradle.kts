@@ -1,8 +1,3 @@
-//val releaseKeyAlias: String = getLocalProperty("release.key.alias")
-//val releaseKeyPassword: String = getLocalProperty("release.key.password")
-
-//fun getLocalProperty(key: String) = gradleLocalProperties(rootDir).getProperty(key)
-
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
   alias(libs.plugins.android.application)
@@ -29,15 +24,6 @@ android {
       useSupportLibrary = true
     }
   }
-
-//  signingConfigs {
-//    create("release") {
-//      keyAlias = releaseKeyAlias
-//      keyPassword = releaseKeyPassword
-//      storePassword = releaseKeyPassword
-//      storeFile = file("${rootDir.absolutePath}\\key-release.jks")
-//    }
-//  }
 
   buildTypes {
     getByName("release") {
@@ -92,6 +78,8 @@ dependencies {
   implementation(libs.bundles.lifcycle)
 
   // DI
+  implementation(libs.bundles.koin)
+  ksp(libs.koin.ksp.compiler)
 
   // Compose
   implementation(libs.bundles.compose)
