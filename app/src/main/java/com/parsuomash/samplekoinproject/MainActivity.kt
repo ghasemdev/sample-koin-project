@@ -11,9 +11,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import com.parsuomash.samplekoinproject.di.appModule
 import com.parsuomash.samplekoinproject.ui.theme.SampleKoinProjectTheme
 import com.parsuomash.sdk.SDK
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -25,7 +27,7 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     installKoin()
-    sdk.test()
+    lifecycleScope.launch { sdk.test() }
 
     setContent {
       SampleKoinProjectTheme {

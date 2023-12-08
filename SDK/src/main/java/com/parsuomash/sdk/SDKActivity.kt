@@ -5,6 +5,7 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
 import com.parsuomash.sdk.di.Bar
 import com.parsuomash.sdk.di.Session
 import com.parsuomash.sdk.di.context.SdkKoinContext
@@ -12,6 +13,7 @@ import com.parsuomash.sdk.di.scope.ActivityScope
 import com.parsuomash.sdk.di.scope.normalScope
 import com.parsuomash.sdk.theme.SampleKoinProjectTheme
 import com.parsuomash.sdk.ui.feature.home.HomeScreen
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,7 +45,7 @@ internal class SDKActivity : ActivityScope() {
     SdkKoinContext.loadKoinModules(sdkModule)
 
     scopeTest()
-    viewModel.foo()
+    lifecycleScope.launch { viewModel.foo() }
 
     setContent {
       SampleKoinProjectTheme {

@@ -7,7 +7,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 internal val appModule = module {
-  includes(scopedModule, sharedPrefModule)
+  includes(scopedModule, sharedPrefModule, coroutinesModule)
   factoryOf(::UseCase)
   viewModelOf(::SDKViewModel)
 }

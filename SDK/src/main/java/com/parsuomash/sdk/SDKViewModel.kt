@@ -13,7 +13,7 @@ internal class SDKViewModel(
     savedStateHandle["hi"] = "hello"
   }
 
-  fun foo() {
+  suspend fun foo() {
     println("ViewModel ${savedStateHandle.get<String>("hi")}")
     sdk.test()
   }

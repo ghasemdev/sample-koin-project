@@ -44,7 +44,7 @@ class SDK private constructor(
     SdkKoinContext.start(context)
   }
 
-  fun test() {
+  suspend fun test() {
     usecase()
     Log.d("SDK", token)
   }
