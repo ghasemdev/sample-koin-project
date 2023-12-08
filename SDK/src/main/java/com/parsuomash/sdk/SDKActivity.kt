@@ -21,12 +21,13 @@ import org.koin.compose.KoinIsolatedContext
 import org.koin.compose.module.rememberKoinModules
 import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.withOptions
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 internal class SDKActivity : ActivityScope() {
   private val sharedPreferences: SharedPreferences by inject()
   private val viewModel: SDKViewModel by viewModel()
-  private val session: Session by inject()
+  private val session: Session by inject { parametersOf("qwer") }
 
   private val sdkModule = module {
     single {

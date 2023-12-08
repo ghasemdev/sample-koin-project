@@ -1,5 +1,6 @@
 package com.parsuomash.sdk.domain.usecase
 
+import com.parsuomash.sdk.di.Token
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Factory
@@ -19,4 +20,8 @@ internal class UseCase(
 }
 
 @Single
-internal class Koo
+internal class Koo(token: Token) {
+  init {
+    println("injectToken:${token.value}")
+  }
+}

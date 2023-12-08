@@ -5,6 +5,7 @@ import com.parsuomash.sdk.BuildConfig
 import com.parsuomash.sdk.di.SdkModule
 import com.parsuomash.sdk.di.coroutinesModule
 import com.parsuomash.sdk.di.sharedPrefModule
+import com.parsuomash.sdk.di.tokenModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.KoinApplication
@@ -51,6 +52,7 @@ internal object SdkKoinContext {
     modules(
       coroutinesModule,
       sharedPrefModule,
+      tokenModule,
       SdkModule.module
     )
   }
