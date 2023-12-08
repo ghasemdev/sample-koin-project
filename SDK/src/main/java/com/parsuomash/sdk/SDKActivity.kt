@@ -16,6 +16,9 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinIsolatedContext
+import org.koin.compose.module.rememberKoinModules
+import org.koin.core.module.dsl.createdAtStart
+import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
 
 internal class SDKActivity : ActivityScope() {
@@ -23,19 +26,21 @@ internal class SDKActivity : ActivityScope() {
   private val viewModel: SDKViewModel by viewModel()
   private val session: Session by inject()
 
+  private val sdkModule = module {
+    single {
+      provideSDK(androidContext()) {
+        token = sharedPreferences.getString("token", "null") ?: "null"
+      }
+    } withOptions {
+      createdAtStart()
+    }
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     SdkKoinContext.start(this)
-    SdkKoinContext.loadKoinModules(
-      module {
-        single {
-          provideSDK(androidContext()) {
-            token = sharedPreferences.getString("token", "null") ?: "null"
-          }
-        }
-      }
-    )
+    SdkKoinContext.loadKoinModules(sdkModule)
 
     scopeTest()
     viewModel.foo()
@@ -44,6 +49,7 @@ internal class SDKActivity : ActivityScope() {
       SampleKoinProjectTheme {
         // A surface container using the 'background' color from the theme
         KoinIsolatedContext(context = SdkKoinContext.get()) {
+          rememberKoinModules(unloadModules = true) { listOf(sdkModule) }
           HomeScreen()
         }
       }
@@ -62,6 +68,7 @@ internal class SDKActivity : ActivityScope() {
   }
 
   override fun onDestroy() {
+    SdkKoinContext.unloadKoinModules(sdkModule)
     SdkKoinContext.stop()
     super.onDestroy()
   }

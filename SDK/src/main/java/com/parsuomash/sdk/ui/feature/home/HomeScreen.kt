@@ -20,11 +20,11 @@ import kotlinx.coroutines.withContext
 
 @Composable
 internal fun HomeScreen(
-//  viewModel: SDKViewModel = koinViewModel(),
+  viewModel: SDKViewModel = koinViewModel(),
   sharedPref: SharedPreferences = koinInject()
 ) {
   LaunchedEffect(Unit) {
-//    viewModel.foo()
+    viewModel.foo()
     withContext(Dispatchers.IO) {
       sharedPref.edit { putString("HomeScreen", "HomeScreen") }
     }
