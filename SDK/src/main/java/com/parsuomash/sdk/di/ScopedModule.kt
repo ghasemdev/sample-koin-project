@@ -24,13 +24,13 @@ internal class Bar(val foo: Foo)
 @Scoped
 internal class Session(
   @InjectedParam parameterToken: String,
-//  application: Application,
+  application: Application,
   context: Context
 ) {
   init {
     println("parameterToken $parameterToken")
     println("Session ${context.cacheDir.absolutePath}")
-//    println("PackageName ${application.packageName}")
+    println("PackageName ${application.packageName}")
   }
 }
 

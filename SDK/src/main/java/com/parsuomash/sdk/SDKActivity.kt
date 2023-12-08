@@ -42,7 +42,7 @@ internal class SDKActivity : ActivityScope() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    SdkKoinContext.start(this)
+    SdkKoinContext.start(this.application)
     SdkKoinContext.loadKoinModules(sdkModule)
 
     scopeTest()
