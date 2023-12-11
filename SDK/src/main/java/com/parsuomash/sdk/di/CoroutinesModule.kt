@@ -10,7 +10,9 @@ import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
 
 @Module
-internal class CoroutinesModule {
+internal object CoroutinesModule {
+  operator fun invoke() = this
+
   @Singleton(createdAtStart = true)
   @Named("IO")
   fun provideIODispatcher() = Dispatchers.IO
