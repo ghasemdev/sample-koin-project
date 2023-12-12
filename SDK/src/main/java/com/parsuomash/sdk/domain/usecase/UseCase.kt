@@ -11,7 +11,7 @@ import org.koin.core.annotation.Single
 @Factory
 internal class UseCase(
   @Named("Default") private val dispatcher: CoroutineDispatcher,
-  private val sharedPreferences: SharedPreferences,
+  @Named("SDKSharedPref") private val sharedPreferences: SharedPreferences,
   val k: Koo
 ) {
   suspend operator fun invoke() {

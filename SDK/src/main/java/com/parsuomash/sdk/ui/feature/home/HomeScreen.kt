@@ -17,11 +17,12 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.koin.core.qualifier.named
 
 @Composable
 internal fun HomeScreen(
   viewModel: SDKViewModel = koinViewModel(),
-  sharedPref: SharedPreferences = koinInject()
+  sharedPref: SharedPreferences = koinInject(named("SDKSharedPref"))
 ) {
   LaunchedEffect(Unit) {
     viewModel.foo()

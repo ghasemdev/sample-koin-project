@@ -2,6 +2,7 @@ package com.parsuomash.sdk
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
@@ -19,17 +20,23 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinIsolatedContext
 import org.koin.compose.module.rememberKoinModules
 import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
 import org.koin.ksp.generated.module
 
 internal class SDKActivity : ActivityScope() {
   private val viewModel: SDKViewModel by viewModel()
   private val session: Session by inject { parametersOf("qwer") }
+  private val sharedPreferences: SharedPreferences by inject(named("SDKSharedPref"))
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     SdkKoinContext.start(this.application)
     SdkKoinContext.loadKoinModules(SdkProviderModule.module)
+
+    if (intent.getStringExtra("uuid") != sharedPreferences.getString("uuid", "").orEmpty()) {
+      finishAndRemoveTask()
+    }
 
     scopeTest()
     lifecycleScope.launch { viewModel.foo() }

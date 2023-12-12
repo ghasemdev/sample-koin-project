@@ -6,15 +6,13 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class SDKViewModel(
-  private val savedStateHandle: SavedStateHandle,
-  private val sdk: SDK
+  private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
   init {
     savedStateHandle["hi"] = "hello"
   }
 
-  suspend fun foo() {
+  fun foo() {
     println("ViewModel ${savedStateHandle.get<String>("hi")}")
-    sdk.test()
   }
 }
