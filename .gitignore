@@ -92,3 +92,5 @@ lint/reports/
 .DS_Store
 
 .fastRequest
+
+.kotlin/

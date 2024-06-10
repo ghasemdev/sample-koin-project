@@ -2,6 +2,7 @@
 plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.compose.compiler)
 
   alias(libs.plugins.ksp)
   id("maven-publish")
@@ -45,8 +46,8 @@ android {
     compose = true
     buildConfig = true
   }
-  composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+  composeCompiler {
+    enableStrongSkippingMode = true
   }
   packaging {
     resources {

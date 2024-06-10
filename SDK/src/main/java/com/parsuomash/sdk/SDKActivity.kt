@@ -69,8 +69,8 @@ internal class SDKActivity : ActivityScope() {
     super.onDestroy()
   }
 
-  override fun onNewIntent(intent: Intent?) {
-    intent?.flags = FLAG_ACTIVITY_CLEAR_TASK
+  override fun onNewIntent(intent: Intent) {
+    intent.flags = FLAG_ACTIVITY_CLEAR_TASK
     super.onNewIntent(intent)
   }
 }
