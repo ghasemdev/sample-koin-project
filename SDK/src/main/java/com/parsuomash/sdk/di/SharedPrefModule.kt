@@ -7,9 +7,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Named
 import org.koin.core.annotation.Singleton
-import org.koin.core.module.dsl.createdAtStart
-import org.koin.core.module.dsl.named
-import org.koin.core.module.dsl.withOptions
+import org.koin.core.qualifier.named
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 @Module
@@ -22,11 +21,8 @@ internal object SharedPrefModule {
 }
 
 internal val sharedPrefModule = module {
-  single {
+  single(qualifier = qualifier("SDKSharedPref"), createdAtStart = true) {
     provideSharedPref(androidContext())
-  } withOptions {
-    named("SDKSharedPref")
-    createdAtStart()
   }
 }
 
